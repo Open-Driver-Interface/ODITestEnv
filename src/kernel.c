@@ -1,8 +1,8 @@
 #include "odi/odi.h"
 #include "odi/core/debug.h"
 
-#include "drivers/test/basic/basic_dd.h"
-#include "drivers/bus/pci/pci_dd.h"
+#include "odi/drivers/test/basic/basic_dd.h"
+#include "odi/drivers/bus/pci/pci_dd.h"
 
 #include "arch/simd.h"
 #include "arch/gdt.h"
