@@ -16,7 +16,7 @@
 
 #define STR_MAX_SIZE 65536
 
-char* odi_dep_itoa(s64 value, int base) {
+char* odi_dep_itoa(s64 value, char * str, int base) {
     #ifdef USE_BMOON
     return itoa(value, base);
     #endif
@@ -56,9 +56,10 @@ int odi_dep_strncmp(const char* s1, const char* s2, int n) {
     //You can implement your own strncmp here
 }
 
-void odi_dep_strncpy(char *dest, const char *src, int n) {
+char* odi_dep_strncpy(char *dest, const char *src, int n) {
     #ifdef USE_BMOON
-    return strncpy(dest, src, n);
+    strncpy(dest, src, n);
+    return dest;
     #endif
     #ifdef USE_KOT
     //Kot strncpy implementation
@@ -96,7 +97,17 @@ void odi_dep_free(void* ptr) {
     //You can implement your own free here
 }
 
-void odi_dep_map_current_memory_size(void* virtual_address, void* physical_memory, u64 bytes) {
+void* odi_dep_get_free_contiguous_virtual_address(size_t size) {
+    #ifdef USE_BMOON //We don't support this, so we will hardcode the address
+    return (void*)0xffffaaff00000000;
+    #endif
+    #ifdef USE_KOT
+    //Kot map_current_memory_size implementation
+    #endif
+    //You can implement your own map_current_memory_size here  
+}
+
+void odi_dep_map_current_memory_size(void* virtual_address, void* physical_memory, size_t bytes) {
     #ifdef USE_BMOON
     map_current_memory_size(virtual_address, physical_memory, bytes);
     #endif
