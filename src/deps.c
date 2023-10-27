@@ -56,6 +56,16 @@ int odi_dep_strncmp(const char* s1, const char* s2, int n) {
     //You can implement your own strncmp here
 }
 
+int odi_dep_memcmp(const void *s1, const void *s2, size_t n) {
+    #ifdef USE_BMOON
+    return memcmp(s1, s2, n);
+    #endif
+    #ifdef USE_KOT
+    //Kot memcmp implementation
+    #endif
+    //You can implement your own memcmp here
+}
+
 char* odi_dep_strncpy(char *dest, const char *src, int n) {
     #ifdef USE_BMOON
     strncpy(dest, src, n);
