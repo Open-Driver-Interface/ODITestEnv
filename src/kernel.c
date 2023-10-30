@@ -25,7 +25,21 @@ void _start(void) {
     
     odi_autoconf((void*)get_rsdp_address());
 
-    odi_hello();
+    odi_list_devices();
+
+    u8 buffer[512] = {0};
+    u64 size = odi_read("hd0", 0, 1, buffer);
+    printf("Read %d sectors from hd0\n", size);
+
+    for (int i = 0; i < 512; i++) {
+        printf("%2x ", buffer[i]);
+        if (i % 16 == 15) {
+            printf("\n");
+        }
+    }
+    printf("\n");
+
+    odi_goodbye();
 
     while(1);
 }

@@ -80,6 +80,16 @@ void* odi_dep_memset(void *s, int c, size_t n) {
     //You can implement your own memset here
 }
 
+void* odi_dep_memcpy(void *dest, const void *src, size_t n) {
+    #ifdef USE_BMOON
+    return memcpy(dest, src, n);
+    #endif
+    #ifdef USE_KOT
+    //Kot memcpy implementation
+    #endif
+    //You can implement your own memcpy here
+}
+
 char* odi_dep_strncpy(char *dest, const char *src, int n) {
     #ifdef USE_BMOON
     strncpy(dest, src, n);
