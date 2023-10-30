@@ -294,9 +294,9 @@ void odi_dep_vsnprintf(char* buffer, int size, const char* format, odi_va_list a
 void odi_dep_printf(const char* format, ...) {
     #ifdef USE_BMOON
     odi_va_list args;
-    odi_dep_va_start(args, format);
+    odi_va_start(args, format);
     odi_dep_vprintf(format, args);
-    odi_dep_va_end(args);
+    odi_va_end(args);
     #endif
     #ifdef USE_KOT
     //Kot printf implementation
