@@ -25,5 +25,7 @@ void _start(void) {
     
     odi_autoconf((void*)get_rsdp_address());
 
+    odi_hello();
+
     while(1);
 }

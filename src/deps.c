@@ -12,6 +12,10 @@
 #include "util/printf.h"
 #include "util/string.h"
 #include "io/io.h"
+u8 ODI_DEP_MPROTECT_PAGE_CACHE_DISABLE = 0x8;
+u8 ODI_DEP_MPROTECT_PAGE_WRITE_BIT = 0x1;
+u8 ODI_DEP_MPROTECT_PAGE_USER_BIT = 0x2;
+u8 ODI_DEP_MPROTECT_PAGE_NX_BIT = 0x4;
 #endif
 
 #define STR_MAX_SIZE 65536
@@ -64,6 +68,16 @@ int odi_dep_memcmp(const void *s1, const void *s2, size_t n) {
     //Kot memcmp implementation
     #endif
     //You can implement your own memcmp here
+}
+
+void* odi_dep_memset(void *s, int c, size_t n) {
+    #ifdef USE_BMOON
+    return memset(s, c, n);
+    #endif
+    #ifdef USE_KOT
+    //Kot memset implementation
+    #endif
+    //You can implement your own memset here
 }
 
 char* odi_dep_strncpy(char *dest, const char *src, int n) {
@@ -135,6 +149,26 @@ void odi_dep_map_current_memory(void* virtual_memory, void* physical_memory) {
     //Kot map_current_memory implementation
     #endif
     //You can implement your own map_current_memory here
+}
+
+void* odi_dep_request_current_page_identity() {
+    #ifdef USE_BMOON
+    return request_current_page_identity();
+    #endif
+    #ifdef USE_KOT
+    //Kot request_current_page_identity implementation
+    #endif
+    //You can implement your own request_current_page_identity here
+}
+
+void odi_dep_mprotect_current(void* address, u64 size, u8 permissions) {
+    #ifdef USE_BMOON
+    mprotect_current(address, size, permissions);
+    #endif
+    #ifdef USE_KOT
+    //Kot mprotect_current implementation
+    #endif
+    //You can implement your own mprotect_current here
 }
 
 void odi_dep_outb(u16 port, u8 value) {
