@@ -16,6 +16,7 @@ u8 ODI_DEP_MPROTECT_PAGE_CACHE_DISABLE = 0x8;
 u8 ODI_DEP_MPROTECT_PAGE_WRITE_BIT = 0x1;
 u8 ODI_DEP_MPROTECT_PAGE_USER_BIT = 0x2;
 u8 ODI_DEP_MPROTECT_PAGE_NX_BIT = 0x4;
+u64 ODI_DEP_PAGE_SIZE = 0x1000;
 #endif
 
 #define STR_MAX_SIZE 65536
@@ -131,6 +132,16 @@ void odi_dep_free(void* ptr) {
     //You can implement your own free here
 }
 
+void * odi_dep_request_page(void) {
+    #ifdef USE_BMOON
+    return request_page();
+    #endif
+    #ifdef USE_KOT
+    //Kot request_page implementation
+    #endif
+    //You can implement your own request_page here
+}
+
 void* odi_dep_get_free_contiguous_virtual_address(size_t size) {
     #ifdef USE_BMOON //We don't support this, so we will hardcode the address
     return (void*)0xffffaaff00000000;
@@ -159,6 +170,28 @@ void odi_dep_map_current_memory(void* virtual_memory, void* physical_memory) {
     //Kot map_current_memory implementation
     #endif
     //You can implement your own map_current_memory here
+}
+
+void* odi_dep_request_current_page(void) {
+    #ifdef USE_BMOON
+    return request_current_page_identity();
+    #endif
+    #ifdef USE_KOT
+    //Kot request_current_page implementation
+    #endif
+    //You can implement your own request_current_page here
+}
+
+void* odi_dep_get_virtual_address(void* address) {
+    #ifdef USE_BMOON
+    void * valid_address_for_the_kernel = 0xffffaafe00000000+address;
+    odi_dep_map_current_memory(valid_address_for_the_kernel, address);
+    return valid_address_for_the_kernel;
+    #endif
+    #ifdef USE_KOT
+    //Kot get_virtual_address implementation
+    #endif
+    //You can implement your own get_virtual_address here
 }
 
 void* odi_dep_request_current_page_identity() {

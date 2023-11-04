@@ -20,12 +20,10 @@ void _start(void) {
     init_heap();
     init_gdt();
     init_interrupts();
-
-    odi_hello();
     
     odi_autoconf((void*)get_rsdp_address());
 
-    odi_list_devices();
+    odi_debug_list_devices();
 
     u8 buffer[512] = {0};
     u64 size = odi_read("hd0", 0, 1, buffer);
@@ -38,8 +36,6 @@ void _start(void) {
         }
     }
     printf("\n");
-
-    odi_goodbye();
 
     while(1);
 }
