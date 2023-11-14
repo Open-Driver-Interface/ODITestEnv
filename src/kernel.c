@@ -26,7 +26,13 @@ void _start(void) {
     odi_debug_list_devices();
 
     u8 buffer[512] = {0};
-    u64 size = odi_read("hd0", 0, 1, buffer);
+    odi_device_t hd = odi_open("hd0");
+    if (hd == NULL) {
+        printf("Failed to open hd0\n");
+        while(1);
+    }
+
+    u64 size = odi_read(hd, 0, 1, buffer);
     printf("Read %d sectors from hd0\n", size);
 
     for (int i = 0; i < 512; i++) {
